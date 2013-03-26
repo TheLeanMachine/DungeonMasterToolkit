@@ -13,5 +13,5 @@ How does it help?
 Architectural Decisions
 -----------------------
 0. At the moment, *DungeonMasterToolkit* is an HTML file with embedded JavaScript, nothing more! (e.g. no database)
-0. Due to teaching purposes this code has not the same level production code
-0. *DungeonMasterToolkit* support only latest Firefox and latest Chrome
+0. Due to teaching purposes this code has not the same level as production code
+0. *DungeonMasterToolkit* supports only latest Firefox and latest Chrome
