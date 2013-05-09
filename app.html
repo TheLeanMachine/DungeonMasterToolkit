@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
   <meta charset="utf-8"/>
   <title>Dungeon Master Toolkit - The little helper for your next pen-and-paper RPG session!</title>
+  <script type="text/javascript" src="lib/angular.min.js"></script>
+  <script type="text/javascript" src="js/CharacterGeneratorCtrl.js"></script>
 </head>
 <body>
 <h1>Dungeon Master Toolkit</h1>
@@ -33,5 +35,45 @@
   </fieldset>
 </form>
 
+<hr style="margin-top:50px;margin-bottom:50px;" />
+
+<form ng-controller="CharacterGeneratorCtrl">
+  <fieldset>
+    <legend>Charakter Generator</legend>
+
+    <input type="text" name="charName" />
+
+    <select name="charClass">
+      <option value="fighter">K&auml;mpfer</option>
+      <option value="thief">Dieb</option>
+      <option value="mage">Magier</option>
+      <option value="priest">Priester</option>
+      <option>5</option>
+    </select>
+
+    <select name="charLevel">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+
+    <input type="submit" value="erstellen"/>
+  </fieldset>
+
+  <p>
+    Charaktere:
+  </p>
+  <table border="1">
+    <tr ng-repeat="char in characters">
+      <td>{{char.name}}</td>
+      <td>{{char.class}}</td>
+      <td>{{char.level}}</td>
+    </tr>
+  </table>
+
+
+</form>
 </body>
 </html>
