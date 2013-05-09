@@ -41,33 +41,34 @@
   <fieldset>
     <legend>Charakter Generator</legend>
 
-    <input type="text" ng-model="character.name" />
+    <input type="text" ng-model="newCharacter.name" />
 
-    <select ng-model="character.class">
-      <option value="fighter" selected="selected">K&auml;mpfer</option>
-      <option value="thief">Dieb</option>
-      <option value="mage">Magier</option>
-      <option value="priest">Priester</option>
+    <select ng-model="newCharacter.classId" ng-options="class.id as class.label for class in availableClasses">
+      <option value="">-- Klasse wählen --</option>
     </select>
 
-    <select ng-model="character.level">
-      <option selected="selected">1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
+    <select ng-model="newCharacter.level">
+      <option value="">-- Level wählen --</option>
+      <option ng-repeat="level in availableLevels">{{level}}</option>
     </select>
 
-    <input type="submit" value="erstellen" ng-click="createCharacter(character)"/>
+    <input type="submit" value="erstellen" ng-click="createCharacter(newCharacter)"/>
   </fieldset>
 
   <p>
     Charaktere:
   </p>
   <table border="1">
+    <tr>
+      <th>Name</th>
+      <th>Klasse</th>
+      <th>ID der Klasse</th>
+      <th>Level</th>
+    </tr>
     <tr ng-repeat="char in characters">
       <td>{{char.name}}</td>
-      <td>{{char.class}}</td>
+      <td>{{classIdToClassLabel(char.classId)}}</td>
+      <td>{{char.classId}}</td>
       <td>{{char.level}}</td>
     </tr>
   </table>
