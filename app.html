@@ -37,29 +37,28 @@
 
 <hr style="margin-top:50px;margin-bottom:50px;" />
 
-<form ng-controller="CharacterGeneratorCtrl">
+<form novalidate ng-controller="CharacterGeneratorCtrl">
   <fieldset>
     <legend>Charakter Generator</legend>
 
-    <input type="text" name="charName" />
+    <input type="text" ng-model="character.name" />
 
-    <select name="charClass">
-      <option value="fighter">K&auml;mpfer</option>
+    <select ng-model="character.class">
+      <option value="fighter" selected="selected">K&auml;mpfer</option>
       <option value="thief">Dieb</option>
       <option value="mage">Magier</option>
       <option value="priest">Priester</option>
-      <option>5</option>
     </select>
 
-    <select name="charLevel">
-      <option>1</option>
+    <select ng-model="character.level">
+      <option selected="selected">1</option>
       <option>2</option>
       <option>3</option>
       <option>4</option>
       <option>5</option>
     </select>
 
-    <input type="submit" value="erstellen"/>
+    <input type="submit" value="erstellen" ng-click="createCharacter(character)"/>
   </fieldset>
 
   <p>
