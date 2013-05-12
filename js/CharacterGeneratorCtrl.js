@@ -45,15 +45,6 @@ function CharacterGeneratorCtrl($scope) {
     new PlayerClass(CLASS_ID.priest, 'Priester')
   ];
 
-  /*$scope.availableClasses = [
-// TODO 'availableClasses' should be a MAP of 'classId' -> 'className/Label'!
-// TODO introduce 'CharacterClass' "class" (no actual classes in JavaScript! Pure objects, baby...)
-    {id:'fighter'},
-    {id:'thief', label:'Dieb'},
-    {id:'mage', label:'Magier'},
-    {id:'priest', label:'Priester'}
-  ];*/
-
   /**
    * List of characters.
    *
@@ -86,7 +77,6 @@ function CharacterGeneratorCtrl($scope) {
       return;
     }
 
-
     $scope.characters.push(newCharacter);
   };
 
@@ -100,13 +90,14 @@ function CharacterGeneratorCtrl($scope) {
     var numOfClasses = $scope.availableClasses.length;
     var classes = $scope.availableClasses;
     var currentClass;
-// TODO 'availableClasses' should be a MAP of 'classId' -> 'className/Label'!
+
     for (i=0; i<numOfClasses; ++i) {
       currentClass = classes[i];
       if (currentClass.id === classId) {
         return currentClass.name;
       }
     }
+
     return "No appropriate character class found for classId 'classId'";
   }
 }
