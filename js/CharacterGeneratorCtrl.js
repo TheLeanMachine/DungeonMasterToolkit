@@ -104,7 +104,7 @@ function CharacterGeneratorCtrl($scope) {
     for (i=0; i<numOfClasses; ++i) {
       currentClass = classes[i];
       if (currentClass.id === classId) {
-        return currentClass.label;
+        return currentClass.name;
       }
     }
     return "No appropriate character class found for classId 'classId'";
