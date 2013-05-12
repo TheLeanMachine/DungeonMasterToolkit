@@ -2,8 +2,35 @@ function logError(errMsg) {
   console.log('[ERROR][CharacterGeneratorCtrl]' + errMsg);
 }
 
+
+/**
+ * An instance represents a playable character class, e.g. 'Fighter'.
+ *
+ * @constructor
+ */
+
+
+function PlayerClass(id, name) {
+  this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
+  this.name = name;
+}
+
 function CharacterGeneratorCtrl($scope) {
 
+  //
+  // "constants"
+  //
+  var CLASS_ID = { // this object's properties will be used like an Enum in Java
+    fighter: 'fighter',
+    mage: 'mage',
+    thief: 'thief',
+    priest: 'priest'
+  };
+
+  //
+  // member properties - variables and functions - exported
+  // in the Scope of the 'CharacterGeneratorCtrl'
+  //
   $scope.availableLevels = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
   /**
@@ -11,14 +38,21 @@ function CharacterGeneratorCtrl($scope) {
    *
    * @type {Array}
    */
-  $scope.availableClasses = [
+  $scope.availableClasses = [ // TODO rename
+    new PlayerClass(CLASS_ID.fighter, 'Kämpfer'),
+    new PlayerClass(CLASS_ID.mage, 'Magier'),
+    new PlayerClass(CLASS_ID.thief, 'Dieb'),
+    new PlayerClass(CLASS_ID.priest, 'Priester')
+  ];
+
+  /*$scope.availableClasses = [
 // TODO 'availableClasses' should be a MAP of 'classId' -> 'className/Label'!
-// TODO introduce 'Character' "class" (no actual classes in JavaScript! Pure objects, baby...)
-    {id:'fighter', label:'KämXpfer'},
+// TODO introduce 'CharacterClass' "class" (no actual classes in JavaScript! Pure objects, baby...)
+    {id:'fighter'},
     {id:'thief', label:'Dieb'},
     {id:'mage', label:'Magier'},
     {id:'priest', label:'Priester'}
-  ];
+  ];*/
 
   /**
    * List of characters.
