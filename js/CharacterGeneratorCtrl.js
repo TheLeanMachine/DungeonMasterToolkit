@@ -4,7 +4,7 @@ function logError(errMsg) {
 
 
 /**
- * An instance represents a playable character class, e.g. 'Fighter'.
+ * Represents the CLASS of a playable character class, e.g. 'Fighter'.
  *
  * @param id Unique identifier of the player character's class
  * @param name Displayed name of the player character's class
@@ -14,6 +14,22 @@ function CharacterClass(id, name) {
   this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
   this.displayName = name;
 }
+
+
+/**
+ * Represents a player character (e.g. 'Gandalf', 20-lvl mage).
+ *
+ * @param characterName TODO add doc
+ * @param classId TODO add doc
+ * @param level TODO add doc
+ * @constructor
+ */
+function Character(characterName, classId, level) {
+  this.characterName = characterName;
+  this.classId = classId;
+  this.level = level;
+}
+
 
 function CharacterGeneratorCtrl($scope) {
 
@@ -52,8 +68,9 @@ function CharacterGeneratorCtrl($scope) {
    * @type {Array}
    */
   $scope.characters = [
-    { characterName: 'Gandalf', classId: 'mage', level: 20},
-    { characterName: 'Gimli', classId: 'fighter', level: 18}
+    new Character('Gandalf', 'mage', 20),
+    new Character('Gimli', 'fighter', 18),
+    new Character('Legolas', 'fighter', 18)
   ];
 
   /**
@@ -62,23 +79,26 @@ function CharacterGeneratorCtrl($scope) {
    * @param formCharacterModel the character model of the &lt;form&gt; input in the UI
    */
   $scope.createCharacter = function(formCharacterModel){
-    // make a copy from the form input (otherwise, changes in the form
-    // input would be reflected in the list of all characters!
-    var newCharacter = angular.copy(formCharacterModel);
-    var requiredCharPropertyMissing;
+    var charName
+      , charClassId
+      , charLevel
+      , requiredCharPropertyMissing;
 
-    if (!newCharacter) {
+    if (!formCharacterModel) {
       logError("'newCharacter' is undefined (no form input given).");
       return;
     }
 
-    requiredCharPropertyMissing = !newCharacter.characterName || !newCharacter.classId || !newCharacter.level;
+    requiredCharPropertyMissing = !formCharacterModel.characterName || !formCharacterModel.classId || !formCharacterModel.level;
     if (requiredCharPropertyMissing) {
       logError("Cannot create new character! Required property missing in 'newCharacter'.");
       return;
     }
 
-    $scope.characters.push(newCharacter);
+    charName = formCharacterModel.characterName;
+    charClassId = formCharacterModel.classId;
+    charLevel = formCharacterModel.level;
+    $scope.characters.push(new Character(charName, charClassId, charLevel));
   };
 
   /**
