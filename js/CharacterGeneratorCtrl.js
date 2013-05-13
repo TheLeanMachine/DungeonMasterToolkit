@@ -9,7 +9,12 @@ function logError(errMsg) {
  * @constructor
  */
 
-
+/**
+ *
+ * @param id Unique identifier of the player character's class
+ * @param name Displayed name of the player character's class
+ * @constructor
+ */
 function PlayerClass(id, name) {
   this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
   this.name = name;
@@ -98,6 +103,6 @@ function CharacterGeneratorCtrl($scope) {
       }
     }
 
-    return "No appropriate character class found for classId 'classId'";
+    return "No appropriate character class found for classId '"+classId+"'";
   }
 }
