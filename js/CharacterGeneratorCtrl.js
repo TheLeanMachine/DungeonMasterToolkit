@@ -17,7 +17,7 @@ function logError(errMsg) {
  */
 function PlayerClass(id, name) {
   this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
-  this.name = name;
+  this.displayName = name;
 }
 
 function CharacterGeneratorCtrl($scope) {
@@ -56,8 +56,8 @@ function CharacterGeneratorCtrl($scope) {
    * @type {Array}
    */
   $scope.characters = [
-    { name: 'Gandalf', classId: 'mage', level: 20},
-    { name: 'Gimli', classId: 'fighter', level: 18}
+    { characterName: 'Gandalf', classId: 'mage', level: 20},
+    { characterName: 'Gimli', classId: 'fighter', level: 18}
   ];
 
   /**
@@ -76,7 +76,7 @@ function CharacterGeneratorCtrl($scope) {
       return;
     }
 
-    requiredCharPropertyMissing = !newCharacter.name || !newCharacter.classId || !newCharacter.level;
+    requiredCharPropertyMissing = !newCharacter.characterName || !newCharacter.classId || !newCharacter.level;
     if (requiredCharPropertyMissing) {
       logError("Cannot create new character! Required property missing in 'newCharacter'.");
       return;
@@ -99,7 +99,7 @@ function CharacterGeneratorCtrl($scope) {
     for (i=0; i<numOfClasses; ++i) {
       currentClass = classes[i];
       if (currentClass.id === classId) {
-        return currentClass.name;
+        return currentClass.displayName;
       }
     }
 

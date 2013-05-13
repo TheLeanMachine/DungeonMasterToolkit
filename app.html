@@ -41,9 +41,9 @@
   <fieldset>
     <legend>Charakter Generator</legend>
 
-    <input type="text" ng-model="newCharacter.name" />
+    <input type="text" ng-model="newCharacter.characterName" />
 
-    <select ng-model="newCharacter.classId" ng-options="class.id as class.name for class in availableClasses">
+    <select ng-model="newCharacter.classId" ng-options="class.id as class.displayName for class in availableClasses">
       <option value="">-- Klasse wählen --</option>
     </select>
 
@@ -66,7 +66,7 @@
       <th>Level</th>
     </tr>
     <tr ng-repeat="char in characters">
-      <td>{{char.name}}</td>
+      <td>{{char.characterName}}</td>
       <td>{{classIdToClassLabel(char.classId)}}</td>
       <td>{{char.classId}}</td>
       <td>{{char.level}}</td>
