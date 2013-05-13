@@ -6,16 +6,11 @@ function logError(errMsg) {
 /**
  * An instance represents a playable character class, e.g. 'Fighter'.
  *
- * @constructor
- */
-
-/**
- *
  * @param id Unique identifier of the player character's class
  * @param name Displayed name of the player character's class
  * @constructor
  */
-function PlayerClass(id, name) {
+function CharacterClass(id, name) {
   this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
   this.displayName = name;
 }
@@ -32,6 +27,7 @@ function CharacterGeneratorCtrl($scope) {
     priest: 'priest'
   };
 
+
   //
   // member properties - variables and functions - exported
   // in the Scope of the 'CharacterGeneratorCtrl'
@@ -44,10 +40,10 @@ function CharacterGeneratorCtrl($scope) {
    * @type {Array}
    */
   $scope.availableClasses = [ // TODO rename
-    new PlayerClass(CLASS_ID.fighter, 'Kämpfer'),
-    new PlayerClass(CLASS_ID.mage, 'Magier'),
-    new PlayerClass(CLASS_ID.thief, 'Dieb'),
-    new PlayerClass(CLASS_ID.priest, 'Priester')
+    new CharacterClass(CLASS_ID.fighter, 'Kämpfer'),
+    new CharacterClass(CLASS_ID.mage, 'Magier'),
+    new CharacterClass(CLASS_ID.thief, 'Dieb'),
+    new CharacterClass(CLASS_ID.priest, 'Priester')
   ];
 
   /**
