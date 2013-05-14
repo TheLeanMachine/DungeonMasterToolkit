@@ -1,14 +1,22 @@
-DungeonMasterToolkit
-====================
+DungeonMasterToolkit **alpha**
+==============================
 
 *DungeonMasterToolkit* is a JavaScript application thats supports a Dungeon Master during an Pen-and-Paper session (offline and online).
 
+ToDOs
+-----
+0. Use async file loading (modularization)
+0. Add unit tests
+0. Set up automated build infrastructure
+0. Configure travis-ci.org
+
+
 How does it help?
------------------------
+-----------------
 *DungeonMasterToolkit* supports you in...
 
-* Calculating dice rolls
-* ...
+* Battle/Combat management
+* TODO Calculating dice rolls
 
 Architectural Decisions
 -----------------------
