@@ -61,6 +61,14 @@ function CharacterCollection() {
 
   // TODO input validation(?)
   // TODO add doc
+  function remove(character) {
+    var key = character.hash();
+    return (delete store[key]); // TRUE, if removal succeeded
+  }
+
+
+  // TODO input validation(?)
+  // TODO add doc
   function forEach(callback) {
     var key
       , currentChar;
@@ -80,10 +88,12 @@ function CharacterCollection() {
     return charArray;
   }
 
+
   //
   // Export public API.
   //
   this.add = add;
+  this.remove = remove;
   this.forEach = forEach;
   this.toArray = toArray;
 }
@@ -92,7 +102,7 @@ function CharacterCollection() {
 
 function CharacterGeneratorCtrl($scope) {
   //
-  // "constants"
+  // private controller state
   //
   var CLASS_ID = { // this object's properties will be used like an Enum in Java
     fighter: 'fighter',
@@ -100,11 +110,6 @@ function CharacterGeneratorCtrl($scope) {
     thief: 'thief',
     priest: 'priest'
   };
-
-
-  //
-  // private controller state
-  //
   var characterCollection = new CharacterCollection()
     .add(new Character('Gandalf', 'mage', 20))
     .add(new Character('Gimli', 'fighter', 18))
