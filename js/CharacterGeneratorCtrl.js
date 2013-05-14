@@ -38,11 +38,42 @@ function Character(displayName, classId, level) {
 function CharacterCollection() {
   var store = {}; // object used as map-like store
 
-  // TODO ...
+  // TODO input validation(?)
+  // TODO check for existing character in store?
+  // TODO add doc
+  function add(character) {
+    var key = character.classId;
+    store[key] = character;
+    return this; // returning 'this' enables "method chaining": myColl.add(..).add(...)
+  }
+
+  // TODO input validation(?)
+  // TODO add doc
+  function forEach(callback) {
+    var key
+      , currentChar;
+    for (key in store) {
+      currentChar = store[key];
+      callback(currentChar);
+    }
+  }
+
+  // TODO input validation(?)
+  // TODO add doc
+  function toArray() {
+    var charArray = [];
+    forEach(function(character) {
+      charArray.push(character);
+    });
+    return charArray;
+  }
 
   //
   // Export public API.
   //
+  this.add = add;
+  this.forEach = forEach;
+  this.toArray = toArray;
 }
 
 
