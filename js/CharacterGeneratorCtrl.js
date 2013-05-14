@@ -4,7 +4,7 @@ function logError(errMsg) {
 
 
 /**
- * Represents the CLASS of a playable character class, e.g. 'Fighter'.
+ * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
  *
  * @param id Unique identifier of the player character's class
  * @param name Displayed name of the player character's class
@@ -19,15 +19,30 @@ function CharacterClass(id, name) {
 /**
  * Represents a player character (e.g. 'Gandalf', 20-lvl mage).
  *
- * @param characterName TODO add doc
+ * @param displayName TODO add doc
  * @param classId TODO add doc
  * @param level TODO add doc
  * @constructor
  */
-function Character(characterName, classId, level) {
-  this.characterName = characterName;
+function Character(displayName, classId, level) {
+  this.displayName = displayName;
   this.classId = classId;
   this.level = level;
+}
+
+/**
+ * A collection of {@link Character}.
+ *
+ * @constructor
+ */
+function CharacterCollection() {
+  var store = {}; // object used as map-like store
+
+  // TODO ...
+
+  //
+  // Export public API.
+  //
 }
 
 
