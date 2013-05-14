@@ -42,7 +42,7 @@ function CharacterCollection() {
   // TODO check for existing character in store?
   // TODO add doc
   function add(character) {
-    var key = character.classId;
+    var key = character.classId + character.displayName; // TODO create (appropriate) unique hash
     store[key] = character;
     return this; // returning 'this' enables "method chaining": myColl.add(..).add(...)
   }
@@ -52,7 +52,7 @@ function CharacterCollection() {
   function forEach(callback) {
     var key
       , currentChar;
-    for (key in store) {
+    for (key in store) { // iterate over the properties (=keys) of the object
       currentChar = store[key];
       callback(currentChar);
     }
@@ -91,6 +91,16 @@ function CharacterGeneratorCtrl($scope) {
 
 
   //
+  // private controller state
+  //
+  var characterCollection = new CharacterCollection()
+    .add(new Character('Gandalf', 'mage', 20))
+    .add(new Character('Gimli', 'fighter', 18))
+    .add(new Character('Legolas', 'fighter', 18));
+
+
+
+  //
   // member properties - variables and functions - exported
   // in the Scope of the 'CharacterGeneratorCtrl'
   //
@@ -109,15 +119,11 @@ function CharacterGeneratorCtrl($scope) {
   ];
 
   /**
-   * List of characters.
+   * View of the list of created characters.
    *
    * @type {Array}
    */
-  $scope.characters = [
-    new Character('Gandalf', 'mage', 20),
-    new Character('Gimli', 'fighter', 18),
-    new Character('Legolas', 'fighter', 18)
-  ];
+  $scope.characters = characterCollection.toArray();
 
   /**
    * Creates a new character depending on form input.
@@ -144,10 +150,14 @@ function CharacterGeneratorCtrl($scope) {
     charName = formCharacterModel.characterName;
     charClassId = formCharacterModel.classId;
     charLevel = formCharacterModel.level;
-    $scope.characters.push(new Character(charName, charClassId, charLevel));
+    characterCollection.add(new Character(charName, charClassId, charLevel));
+
+    $scope.characters = characterCollection.toArray();
   };
 
   /**
+   * TODO delegate to CharacterCollection
+   *
    * Converts a character class ID to the class label.
    *
    * @param classId of the character class
