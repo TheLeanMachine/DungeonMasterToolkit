@@ -26,8 +26,20 @@ function CharacterClass(id, name) {
  */
 function Character(displayName, classId, level) {
   this.displayName = displayName;
-  this.classId = classId;
+  this.classId = classId; // TODO check, if classId is a String
   this.level = level;
+
+  /**
+   * Create a unique hash of this Character.
+   */
+  function hash() {
+    return this.classId.concat(this.displayName);
+  }
+
+  //
+  // Export public API.
+  //
+  this.hash = hash;
 }
 
 /**
@@ -42,7 +54,7 @@ function CharacterCollection() {
   // TODO check for existing character in store?
   // TODO add doc
   function add(character) {
-    var key = character.classId + character.displayName; // TODO create (appropriate) unique hash
+    var key = character.hash();
     store[key] = character;
     return this; // returning 'this' enables "method chaining": myColl.add(..).add(...)
   }
@@ -77,8 +89,8 @@ function CharacterCollection() {
 }
 
 
-function CharacterGeneratorCtrl($scope) {
 
+function CharacterGeneratorCtrl($scope) {
   //
   // "constants"
   //
@@ -126,6 +138,7 @@ function CharacterGeneratorCtrl($scope) {
   $scope.characters = characterCollection.toArray();
 
   /**
+   *
    * Creates a new character depending on form input.
    *
    * @param formCharacterModel the character model of the &lt;form&gt; input in the UI
@@ -141,6 +154,7 @@ function CharacterGeneratorCtrl($scope) {
       return;
     }
 
+    // TODO delegate property check to character collection
     requiredCharPropertyMissing = !formCharacterModel.characterName || !formCharacterModel.classId || !formCharacterModel.level;
     if (requiredCharPropertyMissing) {
       logError("Cannot create new character! Required property missing in 'newCharacter'.");

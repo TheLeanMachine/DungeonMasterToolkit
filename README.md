@@ -5,7 +5,7 @@ DungeonMasterToolkit **alpha**
 
 ToDOs
 -----
-0. A `Character` should have a `CharacterClass` property, or not?)
+0. A `Character` should have a `CharacterClass` property, or not?
 0. Filter input of Character Generator's text field (e.g. prone to XSS attacks?)
 0. Use async file loading (modularization)
 0. Add unit tests
