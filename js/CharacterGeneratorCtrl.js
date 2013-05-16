@@ -7,7 +7,7 @@ function logError(errMsg) {
 }
 
 function timestamp() {
-  return new Date().getMilliseconds();
+  return new Date().getTime();
 }
 
 /**
@@ -58,18 +58,18 @@ CharacterClass.prototype.CLASS_ID = { // (Adding a property to a functions proto
  * @constructor
  */
 function Character(displayName, classId, level) {
-  this.displayName = throwIfNoString(displayName);
+  this.displayName = displayName;//throwIfNoString(displayName);
   this.classId = throwIfNoString(classId);
   this.level = level;
 
   /**
-   * @return hash A unique String hash of this Character. // TODO make if a real hash... ;-)
+   * @return hash A unique String hash of this Character.
    */
   function hash() {
     return classId.concat('_')
       .concat(displayName)
       .concat('_')
-      .concat(timestamp());
+      .concat(timestamp()); // TODO Resolution is too low. Make if a real hash... ;-)
   }
 
   //
