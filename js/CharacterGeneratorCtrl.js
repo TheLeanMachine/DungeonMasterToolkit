@@ -2,23 +2,17 @@ function logError(errMsg) {
   console.log('[ERROR][CharacterGeneratorCtrl]' + errMsg);
 }
 
-
-/*var CLASS_ID = { // this object's properties will be used like an Enum in Java
-  fighter: 'fighter',
-  mage: 'mage',
-  thief: 'thief',
-  priest: 'priest'
-};*/
-
 /**
  * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
+ *
+ * (Exposes 'id' and 'name' as public properties, since we use this class as model for the <select> elements in 'app.html'!)
  *
  * @param id Unique identifier of the player character's class
  * @param name Displayed name of the player character's class
  * @constructor
  */
 function CharacterClass(id, name) {
-  this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
+  this.id = id; // 'id' is only visible in this object's/function's closure
   this.displayName = name;
 }
 // this object's properties will be used like an Enum in Java
@@ -45,7 +39,7 @@ function Character(displayName, classId, level) {
   this.level = level;
 
   /**
-   * Create a unique hash of this Character.
+   * @return hash A unique String hash of this Character.
    */
   function hash() {
     return this.classId.concat(this.displayName); // TODO fix IDEA warning
