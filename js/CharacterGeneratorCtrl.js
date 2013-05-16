@@ -6,6 +6,10 @@ function logError(errMsg) {
   console.log('[ERROR][CharacterGeneratorCtrl]' + errMsg);
 }
 
+function timestamp() {
+  return new Date().getMilliseconds();
+}
+
 /**
  * @param str The input to validate
  * @return str The input value
@@ -55,15 +59,17 @@ CharacterClass.prototype.CLASS_ID = { // (Adding a property to a functions proto
  */
 function Character(displayName, classId, level) {
   this.displayName = throwIfNoString(displayName);
-  this.classId = throwIfNoString(classId); // TODO check, if classId is a String
+  this.classId = throwIfNoString(classId);
   this.level = level;
 
   /**
-   * @return hash A unique String hash of this Character.
+   * @return hash A unique String hash of this Character. // TODO make if a real hash... ;-)
    */
   function hash() {
-    var timestamp = new Date().getMilliseconds();
-    return this.classId.concat(this.displayName); // TODO make if a real hash// TODO fix IDEA warning
+    return classId.concat('_')
+      .concat(displayName)
+      .concat('_')
+      .concat(timestamp());
   }
 
   //
