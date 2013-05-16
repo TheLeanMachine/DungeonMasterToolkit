@@ -3,6 +3,13 @@ function logError(errMsg) {
 }
 
 
+/*var CLASS_ID = { // this object's properties will be used like an Enum in Java
+  fighter: 'fighter',
+  mage: 'mage',
+  thief: 'thief',
+  priest: 'priest'
+};*/
+
 /**
  * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
  *
@@ -14,6 +21,14 @@ function CharacterClass(id, name) {
   this.id = id; // 'id' is only visible in this objects closure (yep, functions are objects, too!)
   this.displayName = name;
 }
+// this object's properties will be used like an Enum in Java
+CharacterClass.prototype.CLASS_ID = { // (Adding a property to a functions prototype makes this property
+  fighter: 'fighter',                 // available to ALL instances created of this class (kind of like
+  mage: 'mage',                       // declaring a static variable in Java).
+  thief: 'thief',
+  priest: 'priest'
+};
+
 
 
 /**
@@ -33,7 +48,7 @@ function Character(displayName, classId, level) {
    * Create a unique hash of this Character.
    */
   function hash() {
-    return this.classId.concat(this.displayName);
+    return this.classId.concat(this.displayName); // TODO fix IDEA warning
   }
 
   //
@@ -104,16 +119,10 @@ function CharacterGeneratorCtrl($scope) {
   //
   // private controller state
   //
-  var CLASS_ID = { // this object's properties will be used like an Enum in Java
-    fighter: 'fighter',
-    mage: 'mage',
-    thief: 'thief',
-    priest: 'priest'
-  };
   var characterCollection = new CharacterCollection()
-    .add(new Character('Gandalf', 'mage', 20))
-    .add(new Character('Gimli', 'fighter', 18))
-    .add(new Character('Legolas', 'fighter', 18));
+    .add(new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20))
+    .add(new Character('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18))
+    .add(new Character('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18));
 
 
 
@@ -129,10 +138,10 @@ function CharacterGeneratorCtrl($scope) {
    * @type {Array}
    */
   $scope.availableClasses = [ // TODO rename
-    new CharacterClass(CLASS_ID.fighter, 'Kämpfer'),
-    new CharacterClass(CLASS_ID.mage, 'Magier'),
-    new CharacterClass(CLASS_ID.thief, 'Dieb'),
-    new CharacterClass(CLASS_ID.priest, 'Priester')
+    new CharacterClass(CharacterClass.prototype.CLASS_ID.fighter, 'Kämpfer'),
+    new CharacterClass(CharacterClass.prototype.CLASS_ID.mage, 'Magier'),
+    new CharacterClass(CharacterClass.prototype.CLASS_ID.thief, 'Dieb'),
+    new CharacterClass(CharacterClass.prototype.CLASS_ID.priest, 'Priester')
   ];
 
   /**
