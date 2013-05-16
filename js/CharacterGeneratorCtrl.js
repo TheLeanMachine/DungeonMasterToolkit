@@ -1,6 +1,28 @@
+// ------------------------------------------------------------------------
+// Gloabal Helper functions.
+// ------------------------------------------------------------------------
+
 function logError(errMsg) {
   console.log('[ERROR][CharacterGeneratorCtrl]' + errMsg);
 }
+
+/**
+ * @param str The input to validate
+ * @return str The input value
+ */
+function throwIfNoString(str) {
+  if (!(Object.prototype.toString.call(str) === '[object String]')) {
+    throw new Error("Variable '"+str+"' must be of type 'String'.");
+  }
+  return str;
+}
+
+
+
+// ------------------------------------------------------------------------
+// 'Classes' representing the domain model
+// ------------------------------------------------------------------------
+
 
 /**
  * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
@@ -23,8 +45,6 @@ CharacterClass.prototype.CLASS_ID = { // (Adding a property to a functions proto
   priest: 'priest'
 };
 
-
-
 /**
  * Represents a player character (e.g. 'Gandalf', 20-lvl mage).
  *
@@ -34,15 +54,16 @@ CharacterClass.prototype.CLASS_ID = { // (Adding a property to a functions proto
  * @constructor
  */
 function Character(displayName, classId, level) {
-  this.displayName = displayName;
-  this.classId = classId; // TODO check, if classId is a String
+  this.displayName = throwIfNoString(displayName);
+  this.classId = throwIfNoString(classId); // TODO check, if classId is a String
   this.level = level;
 
   /**
    * @return hash A unique String hash of this Character.
    */
   function hash() {
-    return this.classId.concat(this.displayName); // TODO fix IDEA warning
+    var timestamp = new Date().getMilliseconds();
+    return this.classId.concat(this.displayName); // TODO make if a real hash// TODO fix IDEA warning
   }
 
   //
@@ -108,6 +129,10 @@ function CharacterCollection() {
 }
 
 
+
+// ------------------------------------------------------------------------
+// The actual controller for the form's input.
+// ------------------------------------------------------------------------
 
 function CharacterGeneratorCtrl($scope) {
   //
