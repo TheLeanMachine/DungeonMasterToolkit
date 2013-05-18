@@ -1,1 +1,5 @@
+# This file contains file patterns that should be ignored by git
+# (you can also use placeholders here like target/*.js; see
+# 'git help gitignore' for details)
+
 .idea/
