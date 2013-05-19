@@ -185,6 +185,22 @@ function CharacterCollection() {
   this.toArray = toArray;
 }
 
+/**
+ * The Rule Engine acts as a facade to its clients: It bundles all operations one can think
+ * of regarding Characters (and other ADnD/RPG stuff) and hides it behind a single API. The
+ * clients don't know about implementations like {@link Character}, they just see this API!
+ *
+ * (Here we create a singleton (as a collection of function properties assigned to an object):
+ *  We will only need rule engine for our entire application!)
+ *
+ * @type {Object}
+ */
+var RULE_ENGINE = {
+  // TODO add doc
+  createCharacter: function(charName, charClassId, charLevel) {
+    return new Character(charName, charClassId, charLevel)
+  }
+};
 
 
 // ------------------------------------------------------------------------
@@ -228,9 +244,7 @@ function CharacterGeneratorCtrl($scope) {
    * @param formCharacterModel the character model of the &lt;form&gt; input in the UI
    */
   $scope.createCharacter = function(formCharacterModel){
-    var charName
-      , charClassId
-      , charLevel
+    var newCharacter
       , requiredCharPropertyMissing;
 
     if (!formCharacterModel) {
@@ -245,10 +259,8 @@ function CharacterGeneratorCtrl($scope) {
       return;
     }
 
-    charName = formCharacterModel.characterName;
-    charClassId = formCharacterModel.classId;
-    charLevel = formCharacterModel.level;
-    characterCollection.add(new Character(charName, charClassId, charLevel));
+    newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
+    characterCollection.add(newCharacter);
 
     $scope.characters = characterCollection.toArray();
   };
