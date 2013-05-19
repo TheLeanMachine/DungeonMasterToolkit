@@ -62,25 +62,31 @@ function valuesOf(obj) {
 /**
  * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
  *
- * (Exposes 'id' and 'name' as public properties, since we use this class as model for the <select> elements in 'app.html'!)
- *
- * @param id Unique identifier of the player character's class
- * @param name Displayed name of the player character's class
  * @constructor
  */
-function CharacterClass(id, name) {
-  this.id = id; // 'id' is only visible in this object's/function's closure
-  this.displayName = name;
-}
+function CharacterClass() {} // ATM, we only use this "class" via its prototype members
+
+/**
+ * The unique identifiers of a playable character class.
+ *
+ * @type {Object}
+ */
 CharacterClass.prototype.CLASS_ID = { // this object's properties will be used like an Enum in Java
   fighter: 'fighter',
   mage: 'mage',                       // (Adding a property to a functions prototype makes these properties
   thief: 'thief',                     // available to ALL instances created of this "class" (kind of like
   priest: 'priest'                    // declaring a static variable in Java).
 };
+
+/**
+ * Creates an Array of all known unique identifiers (of a playable character class).
+ */
 CharacterClass.prototype.classIdsAsArray = function() {
   return valuesOf(CharacterClass.prototype.CLASS_ID);
 };
+/**
+ * A mapping: 'Class ID' -> 'Display name of character class'.
+ */
 CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed immediately; its return value is then saved
   var classIdToDisplayName = {};
   classIdToDisplayName[CharacterClass.prototype.CLASS_ID.fighter] = 'Kämpfer';
@@ -89,6 +95,11 @@ CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed 
   classIdToDisplayName[CharacterClass.prototype.CLASS_ID.priest] = 'Kämpfer';
   return classIdToDisplayName;
 })(); // <<< take a close look: We're invoking a function here!
+/**
+ * Returns the name displayed (in the GUI) for the ID of a character class.
+ *
+ * @param classId The ID of the character class we want to display
+ */
 CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO input validation
   var knownClassId = !!(CharacterClass.prototype.DISPLAY_NAMES[classId]); // "!!" means: a) convert to Boolean b) invert value (to get original value back)
   if (knownClassId) {
