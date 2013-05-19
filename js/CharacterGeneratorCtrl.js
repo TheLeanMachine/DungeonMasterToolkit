@@ -199,21 +199,34 @@ var RULE_ENGINE = {
   // TODO add doc
   createCharacter: function(charName, charClassId, charLevel) {
     return new Character(charName, charClassId, charLevel); // TODO input validate TODO error handling(?)
+  },
+
+  // TODO add doc
+  createCharacterCollection: function() {
+    return new CharacterCollection();
   }
 };
 
 
+
 // ------------------------------------------------------------------------
-// The actual controller for the form's input.
+// The controller for handling form input.
 // ------------------------------------------------------------------------
 
 function CharacterGeneratorCtrl($scope) {
   //
   // private controller state
   //
-  var characterCollection = new CharacterCollection().add(new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20))
-    .add(new Character('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18))
-    .add(new Character('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18));
+  var characterCollection = (function(){ // Function gets executed immediately!
+    var newCharCollection
+      , gandalf = new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20)
+      , gimli = new Character('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18)
+      , legolas = new Character('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18);
+
+    newCharCollection = RULE_ENGINE.createCharacterCollection().add(gandalf).add(legolas).add(gimli);
+    return newCharCollection;
+  })();
+
 
 
   //
