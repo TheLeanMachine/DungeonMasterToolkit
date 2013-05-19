@@ -77,7 +77,6 @@ CharacterClass.prototype.CLASS_ID = { // this object's properties will be used l
   thief: 'thief',                     // available to ALL instances created of this "class" (kind of like
   priest: 'priest'                    // declaring a static variable in Java).
 };
-
 /**
  * Creates an Array of all known unique identifiers (of a playable character class).
  */
@@ -164,7 +163,6 @@ function CharacterCollection() {
     return (delete store[key]); // TRUE, if removal succeeded
   }
 
-
   // TODO input validation(?)
   // TODO add doc
   function forEach(callback) {
@@ -201,7 +199,6 @@ function CharacterGeneratorCtrl($scope) {
     .add(new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20))
     .add(new Character('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18))
     .add(new Character('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18));
-
 
 
   //
