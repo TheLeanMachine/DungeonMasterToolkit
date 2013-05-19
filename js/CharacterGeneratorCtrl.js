@@ -82,14 +82,14 @@ CharacterClass.prototype.classIdsAsArray = function() {
 };
 CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed immediately; its return value is then saved
   var classIdToDisplayName = {};
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.fighter] = 'xxxKämpfer';
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.mage] = 'xxMagier';
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.thief] = 'xxxDieb';
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.priest] = 'xxxKämpfer';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.fighter] = 'Kämpfer';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.mage] = 'Magier';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.thief] = 'Dieb';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.priest] = 'Kämpfer';
   return classIdToDisplayName;
 })(); // <<< take a close look: We're invoking a function here!
 CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO input validation
-  var knownClassId = !!(CharacterClass.prototype.DISPLAY_NAMES[classId]); // "!!" means: convert to Boolean an invert (to get original value back)
+  var knownClassId = !!(CharacterClass.prototype.DISPLAY_NAMES[classId]); // "!!" means: a) convert to Boolean b) invert value (to get original value back)
   if (knownClassId) {
     return CharacterClass.prototype.DISPLAY_NAMES[classId];
   }
