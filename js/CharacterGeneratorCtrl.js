@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------
-// Gloabal Helper functions.
+// Global Helper functions.
 // ------------------------------------------------------------------------
 
 function logError(errMsg) {
@@ -22,6 +22,20 @@ function throwIfNoString(str) {
 }
 
 
+/**
+ * Iterates over properties of an object and executes a callback for each value.
+ *
+ * @param obj The object that gets iterated over
+ * @param callback The callback function being applied to each of the object's property values
+ */
+function forEachPropertyIn(obj, callback) {
+  var propertyName
+    , propertyValue;
+  for (propertyName in obj) { // iterate over the properties (=keys) of the object
+    propertyValue = obj[propertyName];
+    callback(propertyValue);
+  }
+}
 
 // ------------------------------------------------------------------------
 // 'Classes' representing the domain model
@@ -106,12 +120,7 @@ function CharacterCollection() {
   // TODO input validation(?)
   // TODO add doc
   function forEach(callback) {
-    var key
-      , currentChar;
-    for (key in store) { // iterate over the properties (=keys) of the object
-      currentChar = store[key];
-      callback(currentChar);
-    }
+    forEachPropertyIn(store, callback);
   }
 
   // TODO input validation(?)
@@ -168,6 +177,12 @@ function CharacterGeneratorCtrl($scope) {
     new CharacterClass(CharacterClass.prototype.CLASS_ID.thief, 'Dieb'),
     new CharacterClass(CharacterClass.prototype.CLASS_ID.priest, 'Priester')
   ];
+  /*$scope.availableClasses = [ // TODO rename
+   new CharacterClass(CharacterClass.prototype.CLASS_ID.fighter, 'Kämpfer'),
+   new CharacterClass(CharacterClass.prototype.CLASS_ID.mage, 'Magier'),
+   new CharacterClass(CharacterClass.prototype.CLASS_ID.thief, 'Dieb'),
+   new CharacterClass(CharacterClass.prototype.CLASS_ID.priest, 'Priester')
+   ];*/
 
   /**
    * View of the list of created characters.
