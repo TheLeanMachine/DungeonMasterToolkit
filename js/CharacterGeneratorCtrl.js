@@ -21,12 +21,13 @@ function throwIfNoString(str) {
   return str;
 }
 
-
 /**
  * Iterates over properties of an object and executes a callback for each value.
  *
+ * TODO input validation
+ *
  * @param obj The object that gets iterated over
- * @param callback The callback function being applied to each of the object's property values
+ * @param callback The callback function (signature: <code>function(propertyValue)</code>) being applied to each of the object's property values
  */
 function forEachPropertyIn(obj, callback) {
   var propertyName
@@ -37,10 +38,25 @@ function forEachPropertyIn(obj, callback) {
   }
 }
 
+/**
+ * Iterates over properties of an object and returns their values as an Array.
+ *
+ * TODO input validation
+ *
+ * @param obj The object that gets iterated over
+ */
+function propertyValuesAsArrayFrom(obj) {
+  var result = [];
+  forEachPropertyIn(obj, function(propertyValue){
+    result.push(propertyValue);
+  });
+  return result;
+}
+
+
 // ------------------------------------------------------------------------
 // 'Classes' representing the domain model
 // ------------------------------------------------------------------------
-
 
 /**
  * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
@@ -55,12 +71,29 @@ function CharacterClass(id, name) {
   this.id = id; // 'id' is only visible in this object's/function's closure
   this.displayName = name;
 }
-// this object's properties will be used like an Enum in Java
-CharacterClass.prototype.CLASS_ID = { // (Adding a property to a functions prototype makes this property
-  fighter: 'fighter',                 // available to ALL instances created of this class (kind of like
-  mage: 'mage',                       // declaring a static variable in Java).
-  thief: 'thief',
-  priest: 'priest'
+CharacterClass.prototype.CLASS_ID = { // this object's properties will be used like an Enum in Java
+  fighter: 'fighter',
+  mage: 'mage',                       // (Adding a property to a functions prototype makes these properties
+  thief: 'thief',                     // available to ALL instances created of this "class" (kind of like
+  priest: 'priest'                    // declaring a static variable in Java).
+};
+CharacterClass.prototype.classIdsAsArray = function() {
+  return propertyValuesAsArrayFrom(CharacterClass.prototype.CLASS_ID);
+};
+CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed immediately; its return value is then saved
+  var classIdToDisplayName = {};
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.fighter] = 'xxxKämpfer';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.mage] = 'xxMagier';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.thief] = 'xxxDieb';
+  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.priest] = 'xxxKämpfer';
+  return classIdToDisplayName;
+})(); // <<< take a close look: We're invoking a function here!
+CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO input validation
+  var knownClassId = !!(CharacterClass.prototype.DISPLAY_NAMES[classId]); // "!!" means: convert to Boolean an invert (to get original value back)
+  if (knownClassId) {
+    return CharacterClass.prototype.DISPLAY_NAMES[classId];
+  }
+  return "No appropriate character class found for classId '"+classId+"'";
 };
 
 /**
@@ -171,18 +204,7 @@ function CharacterGeneratorCtrl($scope) {
    *
    * @type {Array}
    */
-  $scope.availableClasses = [ // TODO rename
-    new CharacterClass(CharacterClass.prototype.CLASS_ID.fighter, 'Kämpfer'),
-    new CharacterClass(CharacterClass.prototype.CLASS_ID.mage, 'Magier'),
-    new CharacterClass(CharacterClass.prototype.CLASS_ID.thief, 'Dieb'),
-    new CharacterClass(CharacterClass.prototype.CLASS_ID.priest, 'Priester')
-  ];
-  /*$scope.availableClasses = [ // TODO rename
-   new CharacterClass(CharacterClass.prototype.CLASS_ID.fighter, 'Kämpfer'),
-   new CharacterClass(CharacterClass.prototype.CLASS_ID.mage, 'Magier'),
-   new CharacterClass(CharacterClass.prototype.CLASS_ID.thief, 'Dieb'),
-   new CharacterClass(CharacterClass.prototype.CLASS_ID.priest, 'Priester')
-   ];*/
+  $scope.availableClassIds = CharacterClass.prototype.classIdsAsArray();
 
   /**
    * View of the list of created characters.
@@ -231,18 +253,6 @@ function CharacterGeneratorCtrl($scope) {
    * @param classId of the character class
    */
   $scope.classIdToClassLabel = function(classId) {
-    var i;
-    var numOfClasses = $scope.availableClasses.length;
-    var classes = $scope.availableClasses;
-    var currentClass;
-
-    for (i=0; i<numOfClasses; ++i) {
-      currentClass = classes[i];
-      if (currentClass.id === classId) {
-        return currentClass.displayName;
-      }
-    }
-
-    return "No appropriate character class found for classId '"+classId+"'";
+    return CharacterClass.prototype.displayNameForClassId(classId);
   }
 }

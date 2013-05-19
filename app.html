@@ -43,7 +43,7 @@
 
     <input type="text" ng-model="newCharacter.characterName" />
 
-    <select ng-model="newCharacter.classId" ng-options="class.id as class.displayName for class in availableClasses">
+    <select ng-model="newCharacter.classId" ng-options="classIdToClassLabel(classId) for classId in availableClassIds">
       <option value="">-- Klasse wählen --</option>
     </select>
 
