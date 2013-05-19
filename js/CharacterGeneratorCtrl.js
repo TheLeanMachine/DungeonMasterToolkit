@@ -45,7 +45,7 @@ function forEachPropertyIn(obj, callback) {
  *
  * @param obj The object that gets iterated over
  */
-function propertyValuesAsArrayFrom(obj) {
+function valuesOf(obj) {
   var result = [];
   forEachPropertyIn(obj, function(propertyValue){
     result.push(propertyValue);
@@ -79,7 +79,7 @@ CharacterClass.prototype.CLASS_ID = { // this object's properties will be used l
   priest: 'priest'                    // declaring a static variable in Java).
 };
 CharacterClass.prototype.classIdsAsArray = function() {
-  return propertyValuesAsArrayFrom(CharacterClass.prototype.CLASS_ID);
+  return valuesOf(CharacterClass.prototype.CLASS_ID);
 };
 CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed immediately; its return value is then saved
   var classIdToDisplayName = {};
@@ -163,7 +163,7 @@ function CharacterCollection() {
   // TODO input validation(?)
   // TODO add doc
   function toArray() {
-    return propertyValuesAsArrayFrom(store);
+    return valuesOf(store);
   }
 
 
