@@ -54,6 +54,7 @@ function propertyValuesAsArrayFrom(obj) {
 }
 
 
+
 // ------------------------------------------------------------------------
 // 'Classes' representing the domain model
 // ------------------------------------------------------------------------
@@ -131,6 +132,9 @@ function Character(displayName, classId, level) {
  * @constructor
  */
 function CharacterCollection() {
+  //
+  // private members
+  //
   var store = {}; // object used as map-like store
 
   // TODO input validation(?)
@@ -159,11 +163,7 @@ function CharacterCollection() {
   // TODO input validation(?)
   // TODO add doc
   function toArray() {
-    var charArray = [];
-    forEach(function(character) {
-      charArray.push(character);
-    });
-    return charArray;
+    return propertyValuesAsArrayFrom(store);
   }
 
 
