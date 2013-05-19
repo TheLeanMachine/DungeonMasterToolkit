@@ -198,7 +198,7 @@ function CharacterCollection() {
 var RULE_ENGINE = {
   // TODO add doc
   createCharacter: function(charName, charClassId, charLevel) {
-    return new Character(charName, charClassId, charLevel)
+    return new Character(charName, charClassId, charLevel); // TODO input validate TODO error handling(?)
   }
 };
 
@@ -211,8 +211,7 @@ function CharacterGeneratorCtrl($scope) {
   //
   // private controller state
   //
-  var characterCollection = new CharacterCollection()
-    .add(new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20))
+  var characterCollection = new CharacterCollection().add(new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20))
     .add(new Character('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18))
     .add(new Character('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18));
 
@@ -252,7 +251,6 @@ function CharacterGeneratorCtrl($scope) {
       return;
     }
 
-    // TODO delegate property check to character collection
     requiredCharPropertyMissing = !formCharacterModel.characterName || !formCharacterModel.classId || !formCharacterModel.level;
     if (requiredCharPropertyMissing) {
       logError("Cannot create new character! Required property missing in 'newCharacter'.");
@@ -266,8 +264,6 @@ function CharacterGeneratorCtrl($scope) {
   };
 
   /**
-   * TODO delegate to CharacterCollection
-   *
    * Converts a character class ID to the class label.
    *
    * @param classId of the character class
