@@ -218,13 +218,13 @@ function CharacterGeneratorCtrl($scope) {
   // private controller state
   //
   var characterCollection = (function(){ // Function gets executed immediately!
-    var newCharCollection
-      , gandalf = new Character('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20)
-      , gimli = new Character('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18)
-      , legolas = new Character('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18);
+    var result;
+    var gandalf = RULE_ENGINE.createCharacter('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20);
+    var gimli = RULE_ENGINE.createCharacter('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18);
+    var legolas = RULE_ENGINE.createCharacter('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18);
 
-    newCharCollection = RULE_ENGINE.createCharacterCollection().add(gandalf).add(legolas).add(gimli);
-    return newCharCollection;
+    result = RULE_ENGINE.createCharacterCollection().add(gandalf).add(legolas).add(gimli);
+    return result;
   })();
 
 
