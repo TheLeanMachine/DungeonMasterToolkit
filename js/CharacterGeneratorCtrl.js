@@ -220,8 +220,6 @@ function CharacterGeneratorCtrl($scope) {
 
   /**
    * Collection of characters created with this controller.
-   *
-   * @private
    */
   var characterCollection = (function(){ // Function gets executed immediately!
     var result;
@@ -248,7 +246,7 @@ function CharacterGeneratorCtrl($scope) {
   $scope.availableLevels = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
   /**
-   * List of available classes.
+   * List of available class IDs.
    *
    * @type {Array}
    */
@@ -268,16 +266,12 @@ function CharacterGeneratorCtrl($scope) {
    * @param formCharacterModel the character model of the &lt;form&gt; input in the UI
    */
   $scope.createCharacter = function(formCharacterModel){
-    var newCharacter;
-
     try {
       validateFormInput(formCharacterModel); // TODO Throwing Errors seems not appropriate for invalid user input. Rethink!
+      characterFromFormInput(formCharacterModel);
     } catch (err) {
       logError(err);
     }
-
-    newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
-    characterCollection.add(newCharacter);
 
     $scope.characters = characterCollection.toArray();
   };
@@ -285,9 +279,10 @@ function CharacterGeneratorCtrl($scope) {
   /**
    * Validates the input data submitted by the website visitor.
    *
-   * @param formCharacterModel
-   * @throws if 'formCharacterModel' did not provide the required data
-   * @private
+   * Note that this function is private to the controller (since not exported via '$scope')!
+   *
+   * @param formCharacterModel the form input holding the model of a character
+   * @throws Error If 'formCharacterModel' did not provide the required data
    */
   function validateFormInput(formCharacterModel) {
     var requiredPropertyMissing;
@@ -300,6 +295,19 @@ function CharacterGeneratorCtrl($scope) {
     if (requiredPropertyMissing) {
       throw new Error("Cannot create character: Required property missing.");
     }
+  }
+
+  /**
+   * Creates a new character based on the given form input.
+   *
+   * Note that this function is private to the controller (since not exported via '$scope')!
+   *
+   * @param formCharacterModel The form input holding the model of a character
+   * @throws Error If 'formCharacterModel' did not provide the required data
+   */
+  function characterFromFormInput(formCharacterModel) {
+    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
+    characterCollection.add(newCharacter);
   }
 
   /**
