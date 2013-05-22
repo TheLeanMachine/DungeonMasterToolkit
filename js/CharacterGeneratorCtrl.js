@@ -60,7 +60,7 @@ function valuesOf(obj) {
 // ------------------------------------------------------------------------
 
 /**
- * Represents the CLASS (type) of a playable character class, e.g. 'Fighter'.
+ * Represents the class/type of a playable character, e.g. 'Fighter'.
  *
  * @constructor
  */
@@ -77,12 +77,14 @@ CharacterClass.prototype.CLASS_ID = { // this object's properties will be used l
   thief: 'thief',                     // available to ALL instances created of this "class" (kind of like
   priest: 'priest'                    // declaring a static variable in Java).
 };
+
 /**
  * Creates an Array of all known unique identifiers (of a playable character class).
  */
 CharacterClass.prototype.classIdsAsArray = function() {
   return valuesOf(CharacterClass.prototype.CLASS_ID);
 };
+
 /**
  * A mapping: 'Class ID' -> 'Display name of character class'.
  */
@@ -94,6 +96,7 @@ CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed 
   classIdToDisplayName[CharacterClass.prototype.CLASS_ID.priest] = 'Kämpfer';
   return classIdToDisplayName;
 })(); // <<< take a close look: We're invoking a function here!
+
 /**
  * Returns the name displayed (in the GUI) for the ID of a character class.
  *
