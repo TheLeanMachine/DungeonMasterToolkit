@@ -11,7 +11,7 @@ function timestamp() {
 }
 
 /**
- * @param potentialString variable whose type gets checked
+ * @param potentialString Variable whose type gets checked
  * @returns {boolean} TRUE, if 'potentialString' is a 'String'
  */
 function isString(potentialString) {
@@ -21,18 +21,27 @@ function isString(potentialString) {
   return Object.prototype.toString.call(potentialString) === '[object String]';
 }
 
-/**
- * @param str The input to validate
- * @return str The input value
- */
-function throwIfNoString(str) {
-  if (!isString(str)) {
-    throw new Error("Variable '"+str+"' must be of type 'String'.");
-  }
-  return str;
+function isIntegerGreaterZero(potentialInt) {
+  return (typeof potentialInt === 'number') // object of type 'Number'?
+    && !window.isNaN(potentialInt) // check for 'NaN' (actually, "potentialInt % 1 === 0" does the job, too!)
+    && window.isFinite(potentialInt) // check for 'Number.POSITIVE_INFINITY' and 'Number.NEGATIVE_INFINITY' (actually, "potentialInt % 1 === 0" does the job, too!)
+    && (potentialInt % 1 === 0) // since "1.00042 modulo 1" gives you '0.00042...' (where '...' is "machine dependant random float stuff" ;-)
+    && (potentialInt > 0);
 }
 
+function throwIfNoString(potentialString) {
+  if (!isString(potentialString)) {
+    throw new Error("'"+potentialString+"' is not a 'String'.");
+  }
+  return potentialString;
+}
 
+function throwIfNoIntegerGreaterZero(potentialInt) {
+  if (!isIntegerGreaterZero(potentialInt)) {
+    throw new Error("'"+potentialInt+"' is not an Integer greater zero.");
+  }
+  return potentialInt;
+}
 
 /**
  * Iterates over properties of an object and executes a callback for each value.
@@ -134,7 +143,7 @@ CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO inp
 function Character(displayName, classId, level) {
   this.displayName = throwIfNoString(displayName);
   this.classId = throwIfNoString(classId);
-  this.level = level;
+  this.level = throwIfNoIntegerGreaterZero(level);
 
   /**
    * @return hash A unique String hash of this Character.
@@ -324,8 +333,8 @@ function CharacterGeneratorCtrl($scope) {
    * @throws Error If 'formCharacterModel' did not provide the required data
    */
   function createCharacterFrom(formCharacterModel) {
-//    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
-    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, 'rattamattata');
+    var intLevel = parseInt(formCharacterModel.level, 10); // '10' is the radix (= dt. "dezimal system")
+    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, intLevel);
     characterCollection.add(newCharacter);
   }
 

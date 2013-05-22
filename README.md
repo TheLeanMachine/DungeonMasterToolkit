@@ -14,7 +14,7 @@ ToDOs
 0. Create GitHub page for this project, if it can be used to serve app.html  (see http://pages.github.com/)
 0. Use async file loading (modularization)
 0. Create module for rule engine (clients should not know implementation details of, for example, the 'Character' "class")
-0. Add unit tests
+0. Add unit tests (e.g. domain model "class", type-checking helper functions, ...)
 0. Set up automated build infrastructure (JSLint, Auto-Format, Unit-Tests, Minify, ...)
 0. Configure travis-ci.org
 
