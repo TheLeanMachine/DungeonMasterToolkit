@@ -267,8 +267,8 @@ function CharacterGeneratorCtrl($scope) {
    */
   $scope.createCharacter = function(formCharacterModel){
     try {
-      validateFormInput(formCharacterModel); // TODO Throwing Errors seems not appropriate for invalid user input. Rethink!
-      characterFromFormInput(formCharacterModel);
+      validate(formCharacterModel); // TODO Throwing Errors seems not appropriate for invalid user input. Rethink!
+      createCharacterFrom(formCharacterModel);
     } catch (err) {
       logError(err);
     }
@@ -284,7 +284,7 @@ function CharacterGeneratorCtrl($scope) {
    * @param formCharacterModel the form input holding the model of a character
    * @throws Error If 'formCharacterModel' did not provide the required data
    */
-  function validateFormInput(formCharacterModel) {
+  function validate(formCharacterModel) {
     var requiredPropertyMissing;
 
     if (!formCharacterModel) {
@@ -305,7 +305,7 @@ function CharacterGeneratorCtrl($scope) {
    * @param formCharacterModel The form input holding the model of a character
    * @throws Error If 'formCharacterModel' did not provide the required data
    */
-  function characterFromFormInput(formCharacterModel) {
+  function createCharacterFrom(formCharacterModel) {
     var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
     characterCollection.add(newCharacter);
   }
