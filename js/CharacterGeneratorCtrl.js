@@ -11,15 +11,28 @@ function timestamp() {
 }
 
 /**
+ * @param potentialString variable whose type gets checked
+ * @returns {boolean} TRUE, if 'potentialString' is a 'String'
+ */
+function isString(potentialString) {
+  // 'Object.prototype.toString(...)' is used here, since we want to use the
+  // native/ 'toString()' instead of a potentially existing, custom
+  // toString()-method!
+  return Object.prototype.toString.call(potentialString) === '[object String]';
+}
+
+/**
  * @param str The input to validate
  * @return str The input value
  */
 function throwIfNoString(str) {
-  if (!(Object.prototype.toString.call(str) === '[object String]')) {
+  if (!isString(str)) {
     throw new Error("Variable '"+str+"' must be of type 'String'.");
   }
   return str;
 }
+
+
 
 /**
  * Iterates over properties of an object and executes a callback for each value.
@@ -119,7 +132,7 @@ CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO inp
  * @constructor
  */
 function Character(displayName, classId, level) {
-  this.displayName = displayName;//throwIfNoString(displayName);
+  this.displayName = throwIfNoString(displayName);
   this.classId = throwIfNoString(classId);
   this.level = level;
 
@@ -311,7 +324,8 @@ function CharacterGeneratorCtrl($scope) {
    * @throws Error If 'formCharacterModel' did not provide the required data
    */
   function createCharacterFrom(formCharacterModel) {
-    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
+//    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
+    var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, 'rattamattata');
     characterCollection.add(newCharacter);
   }
 
