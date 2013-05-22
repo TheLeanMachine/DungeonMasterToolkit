@@ -188,10 +188,12 @@ function CharacterCollection() {
 /**
  * The Rule Engine acts as a facade to its clients: It bundles all operations one can think
  * of regarding Characters (and other ADnD/RPG stuff) and hides it behind a single API. The
- * clients don't know about implementations like {@link Character}, they just see this API!
+ * clients don't know the implementation details of {@link Character}, they just see this
+ * API! (TODO create a module for the Rule Engine and all related domain objects)
  *
- * (Here we create a singleton (as a collection of function properties assigned to an object):
- *  We will only need rule engine for our entire application!)
+ * (Here we create a singleton: We will only need rule engine for our entire application! The
+ *  singleton is established simply as a collection of function properties assigned to an
+ *  object.)
  *
  * @type {Object}
  */
