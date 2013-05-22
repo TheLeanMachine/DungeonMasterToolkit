@@ -199,8 +199,8 @@ CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO inp
  * @constructor
  */
 function Character(displayName, classId, level) {
-  this.displayName = throwIfNoString(displayName);
-  this.classId = throwIfNoString(classId);
+  this.displayName = throwIfNoString(displayName); // Nice thing here: Arguments of "throwIf..." functions are returned
+  this.classId = throwIfNoString(classId);         // if they are valid. Leads to short, readable code.
   this.level = throwIfNoIntegerGreaterZero(level);
 
   /**
