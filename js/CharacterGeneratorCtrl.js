@@ -2,8 +2,8 @@
 // Global Helper functions.
 // ------------------------------------------------------------------------
 
-function logError(errMsg) {
-  console.log('[ERROR][CharacterGeneratorCtrl]' + errMsg);
+function logError(error) {
+  console.log('[ERROR][CharacterGeneratorCtrl] ' + error.message);
 }
 
 function timestamp() {
@@ -217,6 +217,12 @@ function CharacterGeneratorCtrl($scope) {
   //
   // private controller state
   //
+
+  /**
+   * Collection of characters created with this controller.
+   *
+   * @private
+   */
   var characterCollection = (function(){ // Function gets executed immediately!
     var result;
     var gandalf = RULE_ENGINE.createCharacter('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20);
@@ -262,18 +268,12 @@ function CharacterGeneratorCtrl($scope) {
    * @param formCharacterModel the character model of the &lt;form&gt; input in the UI
    */
   $scope.createCharacter = function(formCharacterModel){
-    var newCharacter
-      , requiredCharPropertyMissing;
+    var newCharacter;
 
-    if (!formCharacterModel) {
-      logError("'newCharacter' is undefined (no form input given).");
-      return;
-    }
-
-    requiredCharPropertyMissing = !formCharacterModel.characterName || !formCharacterModel.classId || !formCharacterModel.level;
-    if (requiredCharPropertyMissing) {
-      logError("Cannot create new character! Required property missing in 'newCharacter'.");
-      return;
+    try {
+      validateFormInput(formCharacterModel); // TODO Throwing Errors seems not appropriate for invalid user input. Rethink!
+    } catch (err) {
+      logError(err);
     }
 
     newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, formCharacterModel.level);
@@ -281,6 +281,26 @@ function CharacterGeneratorCtrl($scope) {
 
     $scope.characters = characterCollection.toArray();
   };
+
+  /**
+   * Validates the input data submitted by the website visitor.
+   *
+   * @param formCharacterModel
+   * @throws if 'formCharacterModel' did not provide the required data
+   * @private
+   */
+  function validateFormInput(formCharacterModel) {
+    var requiredPropertyMissing;
+
+    if (!formCharacterModel) {
+      throw new Error("'formCharacterModel' is undefined (= no form input given).");
+    }
+
+    requiredPropertyMissing = !formCharacterModel.characterName || !formCharacterModel.classId || !formCharacterModel.level;
+    if (requiredPropertyMissing) {
+      throw new Error("Cannot create character: Required property missing.");
+    }
+  }
 
   /**
    * Converts a character class ID to the class label.
