@@ -10,7 +10,7 @@ function CharacterGeneratorCtrl($scope) {
   /**
    * Collection of characters created with this controller.
    */
-  var characterCollection = (function(){ // Function gets executed immediately!
+  var _characterCollection = (function(){ // Function gets executed immediately!
     var result;
     var gandalf = RULE_ENGINE.createCharacter('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20);
     var gimli = RULE_ENGINE.createCharacter('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18);
@@ -46,7 +46,7 @@ function CharacterGeneratorCtrl($scope) {
    *
    * @type {Array}
    */
-  $scope.characters = characterCollection.toArray();
+  $scope.characters = viewModelOfCharacterCollection();
 
   /**
    *
@@ -62,7 +62,7 @@ function CharacterGeneratorCtrl($scope) {
       logError(err);
     }
 
-    $scope.characters = characterCollection.toArray();
+    $scope.characters = viewModelOfCharacterCollection();
   };
 
   /**
@@ -97,7 +97,24 @@ function CharacterGeneratorCtrl($scope) {
   function createCharacterFrom(formCharacterModel) {
     var intLevel = parseInt(formCharacterModel.level, 10); // '10' is the radix (= dt. "dezimal system")
     var newCharacter = RULE_ENGINE.createCharacter(formCharacterModel.characterName, formCharacterModel.classId, intLevel);
-    characterCollection.add(newCharacter);
+    _characterCollection.add(newCharacter);
+  }
+
+  /**
+   * Creates an Array of {@link Character} view models of all created characters.
+   *
+   * Note that this function is private to the controller (since not exported via '$scope')!
+   */
+  function viewModelOfCharacterCollection() {
+    var views = [];
+    _characterCollection.forEach(function(character) {
+      views.push({ // here we create an object literal as the view that gets then rendered in 'app.html'!
+        classId: character.getId(),
+        displayName: character.getDisplayName(),
+        level: character.getLevel()
+      });
+    });
+    return views;
   }
 
   /**
@@ -199,9 +216,12 @@ CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO inp
  * @constructor
  */
 function Character(displayName, classId, level) {
-  this.displayName = throwIfNoString(displayName); // Nice thing here: Arguments of "throwIf..." functions are returned
+/*  this.displayName = throwIfNoString(displayName); // Nice thing here: Arguments of "throwIf..." functions are returned
   this.classId = throwIfNoString(classId);         // if they are valid. Leads to short, readable code.
-  this.level = throwIfNoIntegerGreaterZero(level);
+  this.level = throwIfNoIntegerGreaterZero(level); */
+  var _classId = throwIfNoString(classId);
+  var _displayName =  throwIfNoString(displayName);
+  var _level = throwIfNoIntegerGreaterZero(level);
 
   /**
    * @return hash A unique String hash of this Character.
@@ -217,6 +237,9 @@ function Character(displayName, classId, level) {
   // Export public API.
   //
   this.hash = hash;
+  this.getId = function() { return _classId; }; // (the "constructor" argument) 'classID' is accessed from function's closure!
+  this.getDisplayName = function() { return _displayName; };
+  this.getLevel = function() { return _level; };
 }
 
 /**
