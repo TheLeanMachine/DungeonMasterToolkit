@@ -175,10 +175,12 @@ function HeroType() {} // ATM, we only use this "class" via its prototype member
  */
 HeroType.prototype.CLASS_ID = { // this object's properties will be used like an Enum in Java
   fighter: 'fighter',
-  mage: 'mage',                       // (Adding a property to a functions prototype makes these properties
-  thief: 'thief',                     // available to ALL instances created of this "class" (kind of like
-  priest: 'priest'                    // declaring a static variable in Java).
+  mage: 'mage',                 // (Adding a property to a functions prototype makes these properties
+  thief: 'thief',               // available to ALL instances created of this "class" (kind of like
+  priest: 'priest'              // declaring a static variable in Java).
 };
+// Now: Make all properties of our "enum" immutable (to behave like a Java Enum)
+Object.freeze(HeroType.prototype.CLASS_ID);
 
 /**
  * Creates an Array of all known unique identifiers (of a playable character class).
@@ -235,7 +237,7 @@ function Character(displayName, classId, level) {
     return classId.concat('_')
       .concat(displayName)
       .concat('_')
-      .concat(timestamp()); // TODO Resolution is too low. Make if a real hash... ;-)
+      .concat(timestamp()); // TODO Time Resolution is too low. This is no real hash!
   }
 
   //
