@@ -11,13 +11,16 @@ function CharacterGeneratorCtrl($scope) {
    * Collection of characters created with this controller.
    */
   var _characterCollection = (function(){ // Function gets executed immediately!
-    var result;
+    var collection;
     var gandalf = RULE_ENGINE.createCharacter('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20);
     var gimli = RULE_ENGINE.createCharacter('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18);
     var legolas = RULE_ENGINE.createCharacter('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18);
 
-    result = RULE_ENGINE.createCharacterCollection().add(gandalf).add(legolas).add(gimli);
-    return result;
+    collection = RULE_ENGINE.createCharacterCollection()
+      .add(gandalf)
+      .add(legolas)
+      .add(gimli);
+    return collection;
   })();
 
 
