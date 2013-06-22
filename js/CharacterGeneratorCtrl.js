@@ -12,9 +12,9 @@ function CharacterGeneratorCtrl($scope) {
    */
   var _characterCollection = (function(){ // Function gets executed immediately!
     var collection;
-    var gandalf = RULE_ENGINE.createCharacter('Gandalf', CharacterClass.prototype.CLASS_ID.mage, 20);
-    var gimli = RULE_ENGINE.createCharacter('Gimli', CharacterClass.prototype.CLASS_ID.fighter, 18);
-    var legolas = RULE_ENGINE.createCharacter('Legolas', CharacterClass.prototype.CLASS_ID.thief, 18);
+    var gandalf = RULE_ENGINE.createCharacter('Gandalf', HeroType.prototype.CLASS_ID.mage, 20);
+    var gimli = RULE_ENGINE.createCharacter('Gimli', HeroType.prototype.CLASS_ID.fighter, 18);
+    var legolas = RULE_ENGINE.createCharacter('Legolas', HeroType.prototype.CLASS_ID.thief, 18);
 
     collection = RULE_ENGINE.createCharacterCollection()
       .add(gandalf)
@@ -42,7 +42,7 @@ function CharacterGeneratorCtrl($scope) {
    *
    * @type {Array}
    */
-  $scope.availableClassIds = CharacterClass.prototype.classIdsAsArray();
+  $scope.availableClassIds = HeroType.prototype.classIdsAsArray();
 
   /**
    * View of the list of created characters.
@@ -126,7 +126,7 @@ function CharacterGeneratorCtrl($scope) {
    * @param classId of the character class
    */
   $scope.classIdToClassLabel = function(classId) {
-    return CharacterClass.prototype.displayNameForClassId(classId);
+    return HeroType.prototype.displayNameForClassId(classId);
   }
 }
 
@@ -161,17 +161,19 @@ var RULE_ENGINE = {
 };
 
 /**
- * Represents the class/type of a playable character, e.g. 'Fighter'.
+ * Represents the type of a hero.
+ *
+ * For sakes of clarity we don't use the Pen-and-Paper terms: Instead of "class" (Fighter, Mage, ...) we say "hero".
  *
  * @constructor
  */
-function CharacterClass() {} // ATM, we only use this "class" via its prototype members
+function HeroType() {} // ATM, we only use this "class" via its prototype members
 /**
  * The unique identifiers of a playable character class.
  *
  * @type {Object}
  */
-CharacterClass.prototype.CLASS_ID = { // this object's properties will be used like an Enum in Java
+HeroType.prototype.CLASS_ID = { // this object's properties will be used like an Enum in Java
   fighter: 'fighter',
   mage: 'mage',                       // (Adding a property to a functions prototype makes these properties
   thief: 'thief',                     // available to ALL instances created of this "class" (kind of like
@@ -181,20 +183,20 @@ CharacterClass.prototype.CLASS_ID = { // this object's properties will be used l
 /**
  * Creates an Array of all known unique identifiers (of a playable character class).
  */
-CharacterClass.prototype.classIdsAsArray = function() {
-  return valuesOf(CharacterClass.prototype.CLASS_ID);
+HeroType.prototype.classIdsAsArray = function() {
+  return valuesOf(HeroType.prototype.CLASS_ID);
 };
 
 /**
  * A mapping: 'Class ID' -> 'Display name of character class'.
  */
-CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed immediately; its return value is then saved
-  var classIdToDisplayName = {};
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.fighter] = 'Kämpfer';
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.mage] = 'Magier';
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.thief] = 'Dieb';
-  classIdToDisplayName[CharacterClass.prototype.CLASS_ID.priest] = 'Kämpfer';
-  return classIdToDisplayName;
+HeroType.prototype.DISPLAY_NAMES = (function(){ // Function gets executed immediately; its return value is then saved
+  var mapClassIdToDisplayName = {};
+  mapClassIdToDisplayName[HeroType.prototype.CLASS_ID.fighter] = 'Kämpfer';
+  mapClassIdToDisplayName[HeroType.prototype.CLASS_ID.mage] = 'Magier';
+  mapClassIdToDisplayName[HeroType.prototype.CLASS_ID.thief] = 'Dieb';
+  mapClassIdToDisplayName[HeroType.prototype.CLASS_ID.priest] = 'Kämpfer';
+  return mapClassIdToDisplayName;
 })(); // <<< take a close look: We're invoking a function here!
 
 /**
@@ -202,10 +204,10 @@ CharacterClass.prototype.DISPLAY_NAMES = (function(){ // Function gets executed 
  *
  * @param classId The ID of the character class we want to display
  */
-CharacterClass.prototype.displayNameForClassId = function(classId) { // TODO input validation
-  var knownClassId = !!(CharacterClass.prototype.DISPLAY_NAMES[classId]); // "!!" means: a) convert to Boolean b) invert value (to get original value back)
+HeroType.prototype.displayNameForClassId = function(classId) { // TODO input validation
+  var knownClassId = !!(HeroType.prototype.DISPLAY_NAMES[classId]); // "!!" means: a) convert to Boolean b) invert value (to get original value back)
   if (knownClassId) {
-    return CharacterClass.prototype.DISPLAY_NAMES[classId];
+    return HeroType.prototype.DISPLAY_NAMES[classId];
   }
   return "No appropriate character class found for classId '"+classId+"'";
 };
