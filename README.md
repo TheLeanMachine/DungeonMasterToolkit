@@ -25,6 +25,16 @@ How does it help?
 *DungeonMasterToolkit* supports you in...
 
 * Battle/Combat management
+    * Goal: Design an API that can handle multiple rule systems ("Advanced Dungeons and Dragons", "Das schwarze Auge", ...)
+    * This top-level API defines [a facade](http://en.wikipedia.org/wiki/Facade_pattern "the Facade pattern") that serves our core use cases
+    * We implement this API through a conrete rule engine, let's say ADnD first
+    * Each rule engine is developed ["BDD style"](http://en.wikipedia.org/wiki/Behavior-driven_development), writing tests with [jasmine](http://pivotal.github.io/jasmine/)
+    * We need...
+         * Characters (Heroes)
+         * Monsters
+         * Damage dealing/Life resource
+         * A concept for "organizing hero actions" (Rounds, Initiative)
+    * Be minial! (no use crafting something that none needs)
 * TODO Calculating dice rolls
 
 Architectural Decisions
@@ -32,3 +42,5 @@ Architectural Decisions
 0. At the moment, *DungeonMasterToolkit* is an HTML file with embedded JavaScript, nothing more! (e.g. no database)
 0. Due to teaching purposes this code has not the same level as production code
 0. *DungeonMasterToolkit* supports only latest Firefox and latest Chrome
+
+
