@@ -34,7 +34,7 @@ How does it help?
          * Monsters
          * Damage dealing/Life resource
          * A concept for "organizing hero actions" (Rounds, Initiative)
-    * Be minial! (no use crafting something that none needs)
+    * Be minimal! (no use crafting something that noone needs)
 * TODO Calculating dice rolls
 
 Architectural Decisions
