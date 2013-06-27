@@ -43,7 +43,26 @@
    * @constructor
    */
   function Battle() {
-    this.isReady = function() { return true; };
+    var parties = [];
+
+    /**
+     * @return TRUE if {@link Battle} can be started
+     */
+    function isReady() {
+      return (parties.length > 1);
+    }
+
+    /**
+     * Adds a new party to the {@link Battle}.
+     * @param newParty
+     */
+    function addParty(newParty) {
+      parties.push(newParty);
+    }
+
+    // exporting API
+    this.isReady = isReady;
+    this.addParty = addParty;
   }
 
   /**
@@ -52,6 +71,8 @@
   function createBattle() {
     return new Battle();
   }
+
+
 
   //
   // Helper functions
