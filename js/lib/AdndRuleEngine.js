@@ -9,6 +9,7 @@
   //
   // "constants"
   //
+  var LIB_NAME = 'AdndRuleEngineApi';
   var GLOBAL_CONTEXT = this; // 'window' in the browser, or 'global' on the server (see very bottom of this file)
 
   //
@@ -42,7 +43,7 @@
    * @constructor
    */
   function Battle() {
-    this.isReady = function() { return false; };
+    this.isReady = function() { return true; };
   }
 
   /**
@@ -81,18 +82,19 @@
 
   if (commonJsAvailable()) {
     module.exports = new AdndRuleEngineApi();
-  }
-  if (enderAvailable()) {
+
+  } else if (enderAvailable()) {
     // add `guide` as a global object via a string identifier,
     // for Closure Compiler "advanced" mode
-    GLOBAL_CONTEXT['AdndRuleEngineApi'] = new AdndRuleEngineApi();
-  }
-  if (requireJsAvailable()) {
+    GLOBAL_CONTEXT[LIB_NAME] = new AdndRuleEngineApi();
+
+  } else if (requireJsAvailable()) {
     /*global define:false */
     var dependencies = []; // paths to local JS libs we depend on
     define(dependencies, function () { // add a parameter for each path in 'dependencies' (while keeping the order!)
       return new AdndRuleEngineApi();
     });
-  }
+
+  } else { GLOBAL_CONTEXT[LIB_NAME] = new AdndRuleEngineApi(); }
 
 }).call(this); // setting the current context to module's the global context
