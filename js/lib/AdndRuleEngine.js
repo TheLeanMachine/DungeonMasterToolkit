@@ -43,13 +43,13 @@
    * @constructor
    */
   function Battle() {
-    var parties = [];
+    var parties = {};
 
     /**
      * @return TRUE if {@link Battle} can be started
      */
     function isReady() {
-      return (parties.length > 1);
+      return numberOfOwnProperties(parties) > 1;
     }
 
     /**
@@ -57,7 +57,12 @@
      * @param newParty
      */
     function addParty(newParty) {
-      parties.push(newParty);
+      // TODO test code for input validation!
+      var partyName = newParty.name;
+      var unknownParty = !parties[partyName];
+      if (unknownParty) {
+        parties[partyName] = newParty;
+      }
     }
 
     // exporting API
@@ -77,6 +82,31 @@
   //
   // Helper functions
   //
+
+  // TODO add doc
+  function numberOfOwnProperties(obj) {
+    var count = 0;
+    forEachPropertyIn(obj, function() {
+      ++count;
+    });
+    return count;
+  }
+
+  /**
+   * TODO add doc
+   * callback's signature is function(propertyValue)
+   */
+  function forEachPropertyIn(obj, callback) {
+    var propertyName;
+    var propertyValue;
+    for (propertyName in obj) {
+      if (obj.hasOwnProperty(propertyName)) {
+        propertyValue = propertyName[propertyName];
+        callback(propertyName);
+      }
+    }
+  }
+
   function commonJsAvailable() {
     return (typeof module !== 'undefined' && module.exports); // checks for node.js, too
   }
