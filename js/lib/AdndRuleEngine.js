@@ -11,21 +11,46 @@
   //
   var GLOBAL_CONTEXT = this; // 'window' in the browser, or 'global' on the server (see very bottom of this file)
 
-
-
   //
   // private stuff
   //
 
+  /**
+   * TODO add doc
+   * @constructor
+   */
   function Hero(name) {
     this.name = name;
   }
 
+  /**
+   * TODO add doc
+   */
   function createHero(heroName) {
     return new Hero(heroName);
   }
 
+  /**
+   * TODO add doc
+   */
+  function createHero(heroName) {
+    return new Hero(heroName);
+  }
 
+  /**
+   * TODO add doc
+   * @constructor
+   */
+  function Battle() {
+    this.isReady = function() { return false; };
+  }
+
+  /**
+   * TODO add doc
+   */
+  function createBattle() {
+    return new Battle();
+  }
 
   //
   // Helper functions
@@ -51,6 +76,7 @@
   //
   function AdndRuleEngineApi() { // The API to be exported by this library.
     this.createHero = createHero;
+    this.createBattle = createBattle;
   }
 
   if (commonJsAvailable()) {
@@ -59,7 +85,7 @@
   if (enderAvailable()) {
     // add `guide` as a global object via a string identifier,
     // for Closure Compiler "advanced" mode
-    GLOBAL_CONTEXT['GuideJs'] = new AdndRuleEngineApi();
+    GLOBAL_CONTEXT['AdndRuleEngineApi'] = new AdndRuleEngineApi();
   }
   if (requireJsAvailable()) {
     /*global define:false */

@@ -1,8 +1,12 @@
 var dependencies = [];
-require(dependencies, '../js/lib/AdndRuleEngine.js');
+//var ruleEngine = require(dependencies, '../js/lib/AdndRuleEngine.js');
 
-describe("Tests for AdndRuleEngine", function() {
+
+
+describe("Tests for AdndRuleEngine", function(ruleEngine) {
+  var battle = ruleEngine.createBattle();
+
   it("should create a named here", function() {
-    expect(true).toBe(true);
+    expect(battle.isReady()).toBe(true);
   });
 });
