@@ -14,9 +14,8 @@ describe("A 'Battle' of 'AdndRuleEngine'", function(/*ruleEngine*/) {
   it("cannot be started with one party.", function() {
     var battle = AdndRuleEngineApi.createBattle();
     battle.addParty({});
-    battle.addParty({});
 
-    expect(battle.isReady()).toBe(true);
+    expect(battle.isReady()).toBe(false);
   });
 
   it("can be started with at least to participating parties.", function() {
