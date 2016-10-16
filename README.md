@@ -28,7 +28,7 @@ How does it help?
     * Goal: Design an API that can handle multiple rule systems ("Advanced Dungeons and Dragons", "Das schwarze Auge", ...)
     * This top-level API defines [a facade](http://en.wikipedia.org/wiki/Facade_pattern "the Facade pattern") that serves our core use cases
     * We implement this API through a conrete rule engine, let's say ADnD first
-    * Each rule engine is developed ["BDD style"](http://en.wikipedia.org/wiki/Behavior-driven_development), writing tests with [jasmine](http://pivotal.github.io/jasmine/)
+    * Each rule engine is developed ["BDD style"](http://en.wikipedia.org/wiki/Behavior-driven_development), writing tests with [jasmine](https://jasmine.github.io/)
     * We need...
          * Characters (Heroes)
          * Monsters
